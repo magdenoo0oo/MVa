@@ -1,0 +1,175 @@
+@model StudentManagement.Models.Student
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-warning text-dark">
+                    <h4 class="mb-0">
+                        <i class="fas fa-user-edit me-2"></i>Edit Student
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="ImagePath" />
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                                            <label asp-for="FirstName" class="form-label">
+                                                <i class="fas fa-user me-1"></i>First Name
+                                            </label>
+                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                                            <label asp-for="LastName" class="form-label">
+                                                <i class="fas fa-user me-1"></i>Last Name
+                                            </label>
+                                            <span asp-validation-for="LastName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="Email" class="form-control" placeholder="Email" />
+                                            <label asp-for="Email" class="form-label">
+                                                <i class="fas fa-envelope me-1"></i>Email
+                                            </label>
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
+                                            <label asp-for="PhoneNumber" class="form-label">
+                                                <i class="fas fa-phone me-1"></i>Phone Number
+                                            </label>
+                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="DateOfBirth" class="form-control" type="date" />
+                                            <label asp-for="DateOfBirth" class="form-label">
+                                                <i class="fas fa-birthday-cake me-1"></i>Date of Birth
+                                            </label>
+                                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <select asp-for="DepartmentId" class="form-select" asp-items="ViewBag.DepartmentId">
+                                                <option value="">-- Select Department --</option>
+                                            </select>
+                                            <label asp-for="DepartmentId" class="form-label">
+                                                <i class="fas fa-building me-1"></i>Department
+                                            </label>
+                                            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="GPA" class="form-control" step="0.01" placeholder="GPA" />
+                                            <label asp-for="GPA" class="form-label">
+                                                <i class="fas fa-chart-line me-1"></i>GPA
+                                            </label>
+                                            <span asp-validation-for="GPA" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="EnrollmentDate" class="form-control" type="date" />
+                                            <label asp-for="EnrollmentDate" class="form-label">
+                                                <i class="fas fa-calendar-plus me-1"></i>Enrollment Date
+                                            </label>
+                                            <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="mb-3">
+                                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                                        {
+                                            <img src="@Model.ImagePath" alt="Current Image" class="img-thumbnail rounded-circle" 
+                                                 style="width: 200px; height: 200px; object-fit: cover;" id="currentImage" />
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-secondary rounded-circle mx-auto d-flex align-items-center justify-content-center" 
+                                                 style="width: 200px; height: 200px;" id="placeholderImage">
+                                                <i class="fas fa-user fa-5x text-white"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label asp-for="ImageFile" class="form-label">
+                                            <i class="fas fa-camera me-1"></i>Profile Image
+                                        </label>
+                                        <input asp-for="ImageFile" class="form-control" type="file" accept="image/*" id="imageInput" />
+                                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                        <div class="form-text">Upload a new profile image (optional)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to List
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                <i class="fas fa-save me-2"></i>Update Student
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const currentImg = document.getElementById('currentImage');
+                    const placeholder = document.getElementById('placeholderImage');
+                    
+                    if (currentImg) {
+                        currentImg.src = e.target.result;
+                    } else if (placeholder) {
+                        placeholder.innerHTML = `<img src="${e.target.result}" class="img-thumbnail rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" />`;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+}

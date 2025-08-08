@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Maintenance Mode";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-warning">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-tools"></i> System Maintenance
+                </h4>
+            </div>
+            <div class="card-body text-center">
+                <i class="fas fa-tools fa-5x text-warning mb-4"></i>
+                
+                <h5>System Under Maintenance</h5>
+                
+                <p class="text-muted">
+                    @(ViewData["MaintenanceMessage"] ?? "The system is currently under maintenance. Please try again later.")
+                </p>
+                
+                <div class="mt-4">
+                    <button onclick="location.reload()" class="btn btn-warning">
+                        <i class="fas fa-sync-alt"></i> Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
