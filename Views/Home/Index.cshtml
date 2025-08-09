@@ -5,7 +5,7 @@
 <div class="hero-section bg-primary text-white py-5 mb-4 rounded">
     <div class="container text-center">
         <h1 class="display-4">
-            <i class="fas fa-graduation-cap"></i> 
+            <span aria-hidden="true">🎓</span> 
             Student Management System
         </h1>
         <p class="lead">Efficiently manage departments and students with our comprehensive system</p>
@@ -13,10 +13,10 @@
         {
             <div class="mt-4">
                 <a class="btn btn-light btn-lg me-3" asp-controller="Account" asp-action="Login">
-                    <i class="fas fa-sign-in-alt"></i> Login
+                    <span aria-hidden="true">🔑</span> Login
                 </a>
                 <a class="btn btn-outline-light btn-lg" asp-controller="Account" asp-action="Register">
-                    <i class="fas fa-user-plus"></i> Register
+                    <span aria-hidden="true">📝</span> Register
                 </a>
             </div>
         }
@@ -27,11 +27,11 @@
     <div class="col-md-6">
         <div class="card h-100">
             <div class="card-body text-center">
-                <i class="fas fa-building fa-3x text-primary mb-3"></i>
+                <span class="fa-3x text-primary mb-3" aria-hidden="true">🏢</span>
                 <h5 class="card-title">Department Management</h5>
                 <p class="card-text">View and manage all departments within the organization. Track budgets, establishment dates, and associated students.</p>
                 <a href="@Url.Action("Index", "Departments")" class="btn btn-primary">
-                    <i class="fas fa-eye"></i> View Departments
+                    <span aria-hidden="true">👁️</span> View Departments
                 </a>
             </div>
         </div>
@@ -39,11 +39,11 @@
     <div class="col-md-6">
         <div class="card h-100">
             <div class="card-body text-center">
-                <i class="fas fa-users fa-3x text-success mb-3"></i>
+                <span class="fa-3x text-success mb-3" aria-hidden="true">👥</span>
                 <h5 class="card-title">Student Management</h5>
                 <p class="card-text">Manage student records, track their academic progress, and maintain their personal information and profile images.</p>
                 <a href="@Url.Action("Index", "Students")" class="btn btn-success">
-                    <i class="fas fa-eye"></i> View Students
+                    <span aria-hidden="true">👁️</span> View Students
                 </a>
             </div>
         </div>
@@ -58,14 +58,14 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <i class="fas fa-info-circle"></i> Quick Actions
+                            <span aria-hidden="true">⚡</span> Quick Actions
                         </h5>
                         <div class="row">
                             @if (User.IsInRole("Admin"))
                             {
                                 <div class="col-md-3">
                                     <a class="btn btn-outline-primary btn-sm w-100 mb-2" asp-controller="Departments" asp-action="Create">
-                                        <i class="fas fa-plus"></i> Add Department
+                                        <span aria-hidden="true">➕</span> Add Department
                                     </a>
                                 </div>
                             }
@@ -73,7 +73,7 @@
                             {
                                 <div class="col-md-3">
                                     <a class="btn btn-outline-success btn-sm w-100 mb-2" asp-controller="Students" asp-action="Create">
-                                        <i class="fas fa-plus"></i> Add Student
+                                        <span aria-hidden="true">➕</span> Add Student
                                     </a>
                                 </div>
                             }

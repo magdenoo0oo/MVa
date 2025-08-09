@@ -4,58 +4,52 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Student Management System</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <meta name="theme-color" content="#667eea">
     <meta name="description" content="Modern Student Management System - Manage departments and students efficiently">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark shadow-lg mb-4">
+        <nav class="navbar mb-4">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-graduation-cap"></i> Student Management
+                    <span aria-hidden="true">🎓</span> Student Management
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" data-toggle-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home"></i> Home
+                                <span aria-hidden="true">🏠</span> Home
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Departments" asp-action="Index">
-                                <i class="fas fa-building"></i> Departments
+                                <span aria-hidden="true">🏢</span> Departments
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Students" asp-action="Index">
-                                <i class="fas fa-users"></i> Students
+                                <span aria-hidden="true">👥</span> Students
                             </a>
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown" href="javascript:void(0);">
-                                    <i class="fas fa-cog"></i> Admin
+                                <a class="nav-link dropdown-toggle text-light" role="button" href="javascript:void(0);">
+                                    <span aria-hidden="true">⚙️</span> Admin
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item" asp-controller="Departments" asp-action="Create">
-                                            <i class="fas fa-plus me-2"></i>Add Department
+                                            <span aria-hidden="true" class="me-2">➕</span>Add Department
                                         </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="Students" asp-action="Create">
-                                            <i class="fas fa-user-plus me-2"></i>Add Student
+                                            <span aria-hidden="true" class="me-2">👤➕</span>Add Student
                                         </a>
                                     </li>
                                 </ul>
@@ -66,13 +60,13 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown" href="javascript:void(0);">
-                                    <i class="fas fa-user-circle"></i> @User.Identity.Name
+                                <a class="nav-link dropdown-toggle text-light" role="button" href="javascript:void(0);">
+                                    <span aria-hidden="true">👤</span> @User.Identity.Name
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <h6 class="dropdown-header">
-                                            <i class="fas fa-info-circle me-1"></i>
+                                            <span aria-hidden="true" class="me-1">ℹ️</span>
                                             Role: @(User.IsInRole("Admin") ? "Administrator" : "Student")
                                         </h6>
                                     </li>
@@ -110,17 +104,17 @@
             @if (TempData["Error"] != null)
             {
                 <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span class="me-2" aria-hidden="true">⛔</span>
                     @TempData["Error"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <button type="button" class="btn-close" aria-label="Close"></button>
                 </div>
             }
             @if (TempData["Success"] != null)
             {
                 <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-                    <i class="fas fa-check-circle me-2"></i>
+                    <span class="me-2" aria-hidden="true">✅</span>
                     @TempData["Success"]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <button type="button" class="btn-close" aria-label="Close"></button>
                 </div>
             }
             @RenderBody()
@@ -135,16 +129,14 @@
                 </div>
                 <div class="col-md-6 text-end">
                     <a class="text-white-50 me-3" asp-controller="Home" asp-action="Privacy">
-                        <i class="fas fa-shield-alt me-1"></i>Privacy
+                        <span class="me-1" aria-hidden="true">🛡️</span>Privacy
                     </a>
-                    <span class="text-white-50">Built with <i class="fas fa-heart text-danger"></i></span>
+                    <span class="text-white-50">Built with <span aria-hidden="true">❤️</span></span>
                 </div>
             </div>
         </div>
     </footer>
     
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

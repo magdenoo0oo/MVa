@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeApp() {
     // Initialize all components
+    initializeNavigation();
     initializeAnimations();
     initializeFormEnhancements();
     initializeImageHandling();
@@ -15,6 +16,63 @@ function initializeApp() {
     initializeConfirmations();
     initializeLoadingStates();
     initializeAccessibility();
+}
+
+// Navigation (pure JS)
+function initializeNavigation() {
+    // Navbar collapse toggle
+    document.querySelectorAll('.navbar-toggler').forEach(toggler => {
+        toggler.addEventListener('click', function () {
+            const targetSelector = this.getAttribute('data-toggle-target');
+            const target = targetSelector ? document.querySelector(targetSelector) : null;
+            if (target) {
+                target.classList.toggle('open');
+                const expanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', (!expanded).toString());
+            }
+        });
+    });
+
+    // Close nav on link click (mobile)
+    document.querySelectorAll('.navbar-collapse .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const collapse = link.closest('.navbar').querySelector('.navbar-collapse');
+            if (collapse && getComputedStyle(document.querySelector('.navbar-toggler')).display !== 'none') {
+                collapse.classList.remove('open');
+            }
+        });
+    });
+
+    // Dropdowns
+    document.querySelectorAll('.nav-item.dropdown > .nav-link.dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            const parent = this.closest('.nav-item.dropdown');
+            const isOpen = parent.classList.contains('open');
+            closeAllDropdowns();
+            if (!isOpen) {
+                parent.classList.add('open');
+            }
+        });
+    });
+
+    // Click outside to close dropdowns
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.nav-item.dropdown')) {
+            closeAllDropdowns();
+        }
+    });
+
+    // ESC key closes dropdowns
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeAllDropdowns();
+        }
+    });
+
+    function closeAllDropdowns() {
+        document.querySelectorAll('.nav-item.dropdown.open').forEach(item => item.classList.remove('open'));
+    }
 }
 
 // Animation System
@@ -73,7 +131,7 @@ function initializeFormEnhancements() {
                 
                 // Show loading state
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+                submitBtn.innerHTML = '⏳ Processing...';
                 
                 // Re-enable after timeout (fallback)
                 setTimeout(() => {
@@ -292,10 +350,10 @@ function showSearchLoading(input, show) {
     const button = input.parentElement.querySelector('button');
     if (button) {
         if (show) {
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            button.textContent = '⏳';
             button.disabled = true;
         } else {
-            button.innerHTML = '<i class="fas fa-search"></i>';
+            button.textContent = 'Search';
             button.disabled = false;
         }
     }
@@ -375,33 +433,33 @@ function hideAlert(alert) {
 function showAlert(message, type = 'info', duration = 5000) {
     const alertContainer = document.querySelector('.container') || document.body;
     const alertId = 'alert-' + Date.now();
-    
+
     const alertHTML = `
         <div id="${alertId}" class="alert alert-${type} alert-dismissible fade show" role="alert" style="opacity: 0; transform: translateY(-20px);">
-            <i class="fas fa-${getAlertIcon(type)} me-2"></i>
+            <span class="me-2">${getAlertIcon(type)}</span>
             ${message}
             <button type="button" class="btn-close" aria-label="Close"></button>
         </div>
     `;
-    
+
     alertContainer.insertAdjacentHTML('afterbegin', alertHTML);
-    
+
     const alert = document.getElementById(alertId);
-    
+
     // Animate in
     setTimeout(() => {
         alert.style.transition = 'all 0.3s ease';
         alert.style.opacity = '1';
         alert.style.transform = 'translateY(0)';
     }, 50);
-    
+
     // Auto-hide
     if (duration > 0) {
         setTimeout(() => {
             hideAlert(alert);
         }, duration);
     }
-    
+
     // Close button
     alert.querySelector('.btn-close').addEventListener('click', () => {
         hideAlert(alert);
@@ -410,30 +468,20 @@ function showAlert(message, type = 'info', duration = 5000) {
 
 function getAlertIcon(type) {
     const icons = {
-        success: 'check-circle',
-        danger: 'exclamation-triangle',
-        warning: 'exclamation-triangle',
-        info: 'info-circle'
+        success: '✅',
+        danger: '⛔',
+        warning: '⚠️',
+        info: 'ℹ️'
     };
-    return icons[type] || 'info-circle';
+    return icons[type] || 'ℹ️';
 }
 
 // Enhanced Tooltips
 function initializeTooltips() {
-    // Initialize Bootstrap tooltips if available
-    if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    }
-
-    // Custom tooltip system for elements with title attribute
+    // Pure JS tooltip system for elements with title attribute
     document.querySelectorAll('[title]').forEach(element => {
-        if (!element.hasAttribute('data-bs-toggle')) {
-            element.addEventListener('mouseenter', showCustomTooltip);
-            element.addEventListener('mouseleave', hideCustomTooltip);
-        }
+        element.addEventListener('mouseenter', showCustomTooltip);
+        element.addEventListener('mouseleave', hideCustomTooltip);
     });
 }
 
@@ -555,7 +603,7 @@ function showFormLoading(form) {
     if (submitBtn && !submitBtn.disabled) {
         submitBtn.disabled = true;
         const originalContent = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+        submitBtn.innerHTML = '⏳ Processing...';
         
         // Store original content for restoration
         submitBtn.dataset.originalContent = originalContent;
