@@ -5,12 +5,12 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>
-        <i class="fas fa-building"></i> Departments
+        <span aria-hidden="true">🏢</span> Departments
     </h2>
     @if (User.IsInRole("Admin"))
     {
         <a asp-action="Create" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Create New Department
+            <span aria-hidden="true">➕</span> Create New Department
         </a>
     }
 </div>
@@ -22,10 +22,8 @@
                 <form asp-action="Index" method="get">
                     <div class="input-group">
                         <input type="text" name="search" value="@ViewData["CurrentFilter"]" 
-                               class="form-control" placeholder="Search departments..." id="searchInput" />
-                        <button class="btn btn-outline-secondary" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
+                               class="form-control search-input" placeholder="Search departments..." id="searchInput" />
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
                     </div>
                 </form>
             </div>
@@ -33,11 +31,11 @@
                 <div class="btn-group float-end" role="group">
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" 
                        asp-route-search="@ViewData["CurrentFilter"]" class="btn btn-outline-secondary">
-                        <i class="fas fa-sort-alpha-down"></i> Name
+                        Name
                     </a>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]" 
                        asp-route-search="@ViewData["CurrentFilter"]" class="btn btn-outline-secondary">
-                        <i class="fas fa-sort-numeric-down"></i> ID
+                        ID
                     </a>
                 </div>
             </div>
@@ -61,7 +59,7 @@
         <li class="page-item @prevDisabled">
             <a class="page-link" asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]" 
                asp-route-page="@(Model.PageIndex - 1)" asp-route-search="@ViewData["CurrentFilter"]">
-                <i class="fas fa-chevron-left"></i> Previous
+                ◀️ Previous
             </a>
         </li>
         
@@ -76,7 +74,7 @@
         <li class="page-item @nextDisabled">
             <a class="page-link" asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]" 
                asp-route-page="@(Model.PageIndex + 1)" asp-route-search="@ViewData["CurrentFilter"]">
-                Next <i class="fas fa-chevron-right"></i>
+                Next ▶️
             </a>
         </li>
     </ul>
@@ -84,19 +82,12 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function() {
-            $('#searchInput').on('keyup', function() {
-                var searchString = $(this).val();
-                
-                $.ajax({
-                    url: '@Url.Action("Search", "Departments")',
-                    type: 'POST',
-                    data: { searchString: searchString },
-                    success: function(data) {
-                        $('#departmentsContainer').html(data);
-                    }
-                });
-            });
+        // Use global site.js debounced search if AJAX is wired via data-search-url
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form[asp-action="Index"], form[action*="/Departments/Index"]');
+            if (form) {
+                form.dataset.searchUrl = '@Url.Action("Search", "Departments")';
+            }
         });
     </script>
 }
