@@ -3,41 +3,35 @@
     ViewData["Title"] = "Students";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>
-        <i class="fas fa-users"></i> Students
-    </h2>
+<div class="flex items-center justify-between mb-4">
+    <h2>👥 Students</h2>
     @if (User.IsInRole("Admin") || User.IsInRole("Student"))
     {
-        <a asp-action="Create" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add New Student
-        </a>
+        <a asp-action="Create" class="btn btn-primary">➕ Add New Student</a>
     }
 </div>
 
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-6">
                 <form asp-action="Index" method="get">
-                    <div class="input-group">
+                    <div class="flex gap-2">
                         <input type="text" name="search" value="@ViewData["CurrentFilter"]" 
-                               class="form-control" placeholder="Search students..." id="searchInput" />
-                        <button class="btn btn-outline-secondary" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
+                               class="" placeholder="Search students..." id="searchInput" />
+                        <button class="btn btn-outline" type="submit">Search</button>
                     </div>
                 </form>
             </div>
-            <div class="col-md-6">
-                <div class="btn-group float-end" role="group">
+            <div class="col-6">
+                <div class="flex justify-end gap-2">
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" 
-                       asp-route-search="@ViewData["CurrentFilter"]" class="btn btn-outline-secondary">
-                        <i class="fas fa-sort-alpha-down"></i> Name
+                       asp-route-search="@ViewData["CurrentFilter"]" class="btn btn-outline">
+                        Name
                     </a>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["IdSortParm"]" 
-                       asp-route-search="@ViewData["CurrentFilter"]" class="btn btn-outline-secondary">
-                        <i class="fas fa-sort-numeric-down"></i> ID
+                       asp-route-search="@ViewData["CurrentFilter"]" class="btn btn-outline">
+                        ID
                     </a>
                 </div>
             </div>
@@ -50,18 +44,17 @@
     </div>
 </div>
 
-<!-- Pagination -->
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
 <nav aria-label="Students pagination" class="mt-3">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination justify-center">
         <li class="page-item @prevDisabled">
             <a class="page-link" asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]" 
                asp-route-page="@(Model.PageIndex - 1)" asp-route-search="@ViewData["CurrentFilter"]">
-                <i class="fas fa-chevron-left"></i> Previous
+                ◀️ Previous
             </a>
         </li>
         
@@ -76,7 +69,7 @@
         <li class="page-item @nextDisabled">
             <a class="page-link" asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]" 
                asp-route-page="@(Model.PageIndex + 1)" asp-route-search="@ViewData["CurrentFilter"]">
-                Next <i class="fas fa-chevron-right"></i>
+                Next ▶️
             </a>
         </li>
     </ul>
@@ -84,19 +77,11 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function() {
-            $('#searchInput').on('keyup', function() {
-                var searchString = $(this).val();
-                
-                $.ajax({
-                    url: '@Url.Action("Search", "Students")',
-                    type: 'POST',
-                    data: { searchString: searchString },
-                    success: function(data) {
-                        $('#studentsContainer').html(data);
-                    }
-                });
-            });
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form[asp-action="Index"], form[action*="/Students/Index"]');
+            if (form) {
+                form.dataset.searchUrl = '@Url.Action("Search", "Students")';
+            }
         });
     </script>
 }
