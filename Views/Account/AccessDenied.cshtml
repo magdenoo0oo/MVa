@@ -7,11 +7,11 @@
         <div class="card border-danger">
             <div class="card-header bg-danger text-white">
                 <h4 class="mb-0">
-                    <i class="fas fa-ban"></i> Access Denied
+                    <span aria-hidden="true">🚫</span> Access Denied
                 </h4>
             </div>
             <div class="card-body text-center">
-                <i class="fas fa-exclamation-triangle fa-5x text-warning mb-4"></i>
+                <span class="fa-5x text-warning mb-4" aria-hidden="true">⚠️</span>
                 <h5>You don't have permission to access this resource</h5>
                 <p class="text-muted">
                     The page you are trying to access requires specific permissions that your account does not have.
@@ -20,21 +20,21 @@
                 
                 <div class="mt-4">
                     <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
-                        <i class="fas fa-home"></i> Go Home
+                        <span aria-hidden="true">🏠</span> Go Home
                     </a>
                     
                     @if (User.Identity.IsAuthenticated)
                     {
                         <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline ms-2">
                             <button type="submit" class="btn btn-outline-secondary">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                                <span aria-hidden="true">🚪</span> Logout
                             </button>
                         </form>
                     }
                     else
                     {
                         <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary ms-2">
-                            <i class="fas fa-sign-in-alt"></i> Login
+                            <span aria-hidden="true">🔑</span> Login
                         </a>
                     }
                 </div>
